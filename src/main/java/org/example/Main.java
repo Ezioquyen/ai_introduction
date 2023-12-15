@@ -1,9 +1,9 @@
 package org.example;
 
+
 import org.example.model.Input;
 import org.example.model.Vertical;
-import org.example.process.Algorithm;
-import org.example.process.DataProcess;
+import org.example.process.*;
 
 import java.io.IOException;
 
@@ -11,12 +11,16 @@ public class Main {
     public static void main(String[] args) throws IOException {
         DataProcess dataProcess = new DataProcess();
         //Example input
-        Vertical start = new Vertical(21.021710, 105.828918);
-        Vertical end = new Vertical(21.022475066870633,105.8281084508101);
-        Algorithm algorithm = new Algorithm(dataProcess, new Input(start,end));
-        for(Vertical vertical : algorithm.solve()){
-            System.out.println(vertical.getX()+ ","+vertical.getY());
-
+        Vertical start = new Vertical(21.031916, 105.830775);
+        Vertical end = new Vertical(21.031523, 105.832145);
+        Algorithm algorithm = new AStarAlgorithm();
+        algorithm.setDataProcess(dataProcess);
+        algorithm.setInput(new Input(start,end));
+        StringBuilder outPut = new StringBuilder();
+        for(Vertical vertical: algorithm.solve()){
+            outPut.append(vertical.getX()).append(",").append(vertical.getY()).append("|");
         }
+        outPut = new StringBuilder(outPut.substring(0, outPut.length() - 1));
+        System.out.println(outPut);
     }
 }
