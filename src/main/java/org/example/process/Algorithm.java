@@ -25,7 +25,6 @@ public abstract class Algorithm {
 
         return nearestLabel;
     }
-
     double calculateDistance(Vertical start, Vertical end) {
         return Math.sqrt(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2));
     }

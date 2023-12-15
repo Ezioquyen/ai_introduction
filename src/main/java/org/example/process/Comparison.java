@@ -1,30 +1,40 @@
 package org.example.process;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.model.Input;
 
 @Data
+@AllArgsConstructor
 public class Comparison {
-   private Integer fromLabel;
-   private Integer toLabel;
+   private  Input input;
    private DataProcess dataProcess;
-   private Long startTime;
-   private Long endTime;
+   private AlgorithmName algorithmName;
+
    public void getResult(){
-      Algorithm aStarAlgorithm = new AStarAlgorithm();
-      aStarAlgorithm.setDataProcess(dataProcess);
-      aStarAlgorithm.setInput(new Input(dataProcess.getLabelMapper().get(fromLabel),dataProcess.getLabelMapper().get(toLabel)));
-      Algorithm dijkstraAlgorithm = new AStarAlgorithm();
-      dijkstraAlgorithm.setDataProcess(dataProcess);
-      dijkstraAlgorithm.setInput(new Input(dataProcess.getLabelMapper().get(fromLabel),dataProcess.getLabelMapper().get(toLabel)));
-      startTime = System.currentTimeMillis();
-      aStarAlgorithm.solve();
-      endTime = System.currentTimeMillis();
-      System.out.println("A*: "+(endTime-startTime));
+      Algorithm algorithm = null;
+      long startTime;
+      long endTime;
+      String out = "";
+      switch (algorithmName) {
+         case DIJKSTRA ->{
+            algorithm = new DijkstraAlgorithm();
+            out = "Dijkstra: ";
+         }
+         case A_STAR -> {
+            algorithm = new AStarAlgorithm();
+            out ="A*: ";
+         }
+      }
+      algorithm.setDataProcess(dataProcess);
+      algorithm.setInput(input);
+
 
       startTime = System.currentTimeMillis();
-      dijkstraAlgorithm.solve();
+      algorithm.solve();
       endTime = System.currentTimeMillis();
-      System.out.println("Dijkstra: "+(endTime-startTime));
+      System.out.println(out +(endTime-startTime));
+
+
    }
 }
